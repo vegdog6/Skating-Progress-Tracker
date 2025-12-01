@@ -25,6 +25,7 @@ fn save_data(app: tauri::AppHandle, data: String) -> Result<String, String> {
     fs::write(&file_path, data)
         .map_err(|e| format!("Failed to save data: {}", e))?;
     
+    println!("Data saved to {:?}", file_path);
     Ok(format!("Data saved to {:?}", file_path))
 }
 
@@ -44,6 +45,7 @@ fn load_data(app: tauri::AppHandle) -> Result<String, String> {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![save_data, load_data])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

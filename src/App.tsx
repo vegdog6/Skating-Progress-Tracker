@@ -12,6 +12,7 @@ import { PRESET_SKILLS } from "./utils/skills";
 import { calculateSkillProgress, getTodayLogs } from "./utils/stats";
 import { loadData, saveData } from "./utils/storage";
 import { exportToCSV } from "./utils/export";
+import { ask } from '@tauri-apps/plugin-dialog';
 import SkillGrid from "./components/SkillGrid";
 import PracticeLogList from "./components/PracticeLog";
 import ProgressList from "./components/ProgressList";
@@ -65,14 +66,6 @@ function App() {
     setSkillStatuses(newMap);
   };
 
-  const clearAllData = () => {
-    alert('Button clicked!');
-    if (window.confirm('Are you sure you want to clear all data?')) {
-      setPracticeLogs([]);
-      setSkillStatuses(new Map());
-    }
-  };
-
   // Derived data
   const todayLogs = getTodayLogs(practiceLogs, selectedDate);
   const skillProgress = calculateSkillProgress(practiceLogs, skillStatuses);
@@ -120,71 +113,68 @@ function App() {
         />
       </div>
   
-      {/* Category Filter */}
-      <div className="category-filter">
-        <button 
-          className={selectedCategory === 'all' ? 'active' : ''}
-          onClick={() => setSelectedCategory('all')}
-        >
-          All
-        </button>
-        <button 
-          className={`${selectedCategory === 'jumps' ? 'active' : ''} cat-jumps`}
-          onClick={() => setSelectedCategory('jumps')}
-        >
-          🦘 Jumps
-        </button>
-        <button 
-          className={`${selectedCategory === 'spins' ? 'active' : ''} cat-spins`}
-          onClick={() => setSelectedCategory('spins')}
-        >
-          🌀 Spins
-        </button>
-        <button 
-          className={`${selectedCategory === 'footwork' ? 'active' : ''} cat-footwork`}
-          onClick={() => setSelectedCategory('footwork')}
-        >
-          👣 Footwork
-        </button>
-        <button 
-          className={`${selectedCategory === 'field-moves' ? 'active' : ''} cat-field`}
-          onClick={() => setSelectedCategory('field-moves')}
-        >
-          ⛸️ Field Moves
-        </button>
+      {/* Middle Section */}
+      <div className="middle-section">
+        <div className="left-panel">    
+          {/* Category Filter */}
+          <div className="category-filter">
+            <button 
+              className={selectedCategory === 'all' ? 'active' : ''}
+              onClick={() => setSelectedCategory('all')}
+            >
+              All
+            </button>
+            <button 
+              className={`${selectedCategory === 'jumps' ? 'active' : ''} cat-jumps`}
+              onClick={() => setSelectedCategory('jumps')}
+            >
+              Jumps
+            </button>
+            <button 
+              className={`${selectedCategory === 'spins' ? 'active' : ''} cat-spins`}
+              onClick={() => setSelectedCategory('spins')}
+            >
+              Spins
+            </button>
+            <button 
+              className={`${selectedCategory === 'footwork' ? 'active' : ''} cat-footwork`}
+              onClick={() => setSelectedCategory('footwork')}
+            >
+              Footwork
+            </button>
+            <button 
+              className={`${selectedCategory === 'field-moves' ? 'active' : ''} cat-field`}
+              onClick={() => setSelectedCategory('field-moves')}
+            >
+              Field Moves
+            </button>
+          </div>
+  
+          {/* Skills Grid */}
+          <SkillGrid 
+            skills={filteredSkills}
+            todayLogs={todayLogs}
+            skillProgress={skillProgress}
+            onLogPractice={logPractice}
+          />
+        </div>
+  
+        {/* Progress Tree (right side) */}
+        <ProgressList 
+          progress={skillProgress}
+          logs={practiceLogs}
+          onChangeStatus={changeSkillStatus}
+          onSelectDate={setSelectedDate}
+        />
       </div>
   
-      {/* Skills Grid */}
-      <SkillGrid 
-        skills={filteredSkills}
-        todayLogs={todayLogs}
-        skillProgress={skillProgress}
-        onLogPractice={logPractice}
-      />
-
       {/* Charts */}
-      <Charts logs={practiceLogs}
-              onExport={() => exportToCSV(practiceLogs)} 
-      />
-  
-      {/* Progress */}
-      <ProgressList 
-        progress={skillProgress}
+      <Charts 
         logs={practiceLogs}
-        onChangeStatus={changeSkillStatus}
-        onSelectDate={setSelectedDate}
+        onExport={() => exportToCSV(practiceLogs)} 
       />
-      
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <button 
-          className="clear-data-btn"
-          onClick={clearAllData}
-        >
-          🗑️ Clear All Data
-        </button>
-      </div>
     </div>
   );
 }
-
+  
 export default App;

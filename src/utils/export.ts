@@ -2,7 +2,6 @@ import { PracticeLog } from '../types';
 
 export function exportToCSV(logs: PracticeLog[]): void {
   if (logs.length === 0) {
-    alert('No data to export!');
     return;
   }
 

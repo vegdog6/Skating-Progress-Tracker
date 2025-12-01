@@ -1,5 +1,6 @@
 import { PracticeLog } from '../types';
 import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameDay } from 'date-fns';
+import React from 'react';
 
 interface CalendarProps {
   logs: PracticeLog[];
@@ -7,10 +8,11 @@ interface CalendarProps {
   selectedDate: string;
 }
 
-export default function Calendar({ logs, onSelectDate, selectedDate }: CalendarProps) {
+export default function Calendar({ logs, onSelectDate, selectedDate }: CalendarProps) { 
+  const [currentMonth, setCurrentMonth] = React.useState(new Date());
   const today = new Date();
-  const monthStart = startOfMonth(today);
-  const monthEnd = endOfMonth(today);
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
   
   const getLogsForDay = (date: Date) => {
@@ -31,7 +33,21 @@ export default function Calendar({ logs, onSelectDate, selectedDate }: CalendarP
   
   return (
     <div className="calendar-section">
-      <h2>📅 Practice Calendar - {format(today, 'MMMM yyyy')}</h2>
+      <div className="calendar-header">
+        <button 
+          className="month-nav-btn"
+          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+        >
+          ◀
+        </button>
+        <h2>📅 {format(currentMonth, 'MMMM yyyy')}</h2>
+        <button 
+          className="month-nav-btn"
+          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+        >
+          ▶
+        </button>
+      </div>
       
       <div className="calendar-weekdays">
         <div>Sun</div>

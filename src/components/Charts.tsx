@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Plotly from 'plotly.js-dist';
 import { PracticeLog } from '../types';
 
@@ -8,6 +8,8 @@ interface ChartsProps {
 }
 
 export default function Charts({ logs, onExport }: ChartsProps) {
+  const [showExportSuccess, setShowExportSuccess] = useState(false);
+  
   const pieChartRef = useRef<HTMLDivElement>(null);
   const barChartRef = useRef<HTMLDivElement>(null);
   const lineChartRef = useRef<HTMLDivElement>(null);
@@ -143,9 +145,17 @@ export default function Charts({ logs, onExport }: ChartsProps) {
     <div className="charts-section">
       <div className="section-header">
         <h2>📊 Practice Analytics</h2>
-        <button className="export-btn" onClick={onExport}>
+        <button className="export-btn" 
+        onClick={() => {
+          onExport();
+          setShowExportSuccess(true);
+          setTimeout(() => setShowExportSuccess(false), 3000);
+        }}>
           📥 Export to CSV
         </button>
+        {showExportSuccess && (
+          <span className="export-success">✅ Exported!</span>
+        )}
       </div>
       
       <div className="charts-grid">
