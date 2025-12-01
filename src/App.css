@@ -1,0 +1,987 @@
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+h2 {
+  color: #34495e;
+  margin: 20px 0 15px 0;
+  font-size: 20px;
+}
+
+/* Top Section: Calendar + Today's Log */
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Compact Calendar */
+.calendar-section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.calendar-section h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  margin-bottom: 15px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  min-height: 40px;
+}
+
+.calendar-day:not(.empty):hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.calendar-day.empty {
+  background: transparent !important;
+  cursor: default;
+}
+
+.calendar-day.selected {
+  border: 2px solid #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.calendar-day.today {
+  border: 2px solid #e74c3c;
+}
+
+.day-number {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.day-count {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-size: 9px;
+  padding: 1px 3px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 11px;
+  color: #666;
+}
+
+.legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.category-filter button.active {
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.category-filter button:first-child.active {
+  background: #7f8c8d;
+  border-color: #7f8c8d;
+}
+
+.category-filter button {
+  padding: 16px 28px;
+  border: 2px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.category-filter button:first-child {
+  background: #ecf0f1;
+  border-color: #bdc3c7;
+  color: #7f8c8d;
+}
+
+.cat-jumps {
+  background: #fff4e6;
+  border-color: #ffb347;
+  color: #cc6600;
+}
+
+.cat-spins {
+  background: #ebf5fb;
+  border-color: #5dade2;
+  color: #1a5490;
+}
+
+.cat-footwork {
+  background: #e8f8f5;
+  border-color: #2ecc71;
+  color: #1e8449;
+}
+
+.cat-field {
+  background: #f3e5ff;
+  border-color: #a06cd5;
+  color: #6c3483;
+}
+
+.category-filter button:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.category-filter button.active {
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Category colors */
+.cat-jumps.active {
+  background: #ffb347;
+  border-color: #ffb347;
+}
+
+.cat-spins.active {
+  background: #5dade2;
+  border-color: #5dade2;
+}
+
+.cat-footwork.active {
+  background: #2ecc71;
+  border-color: #2ecc71;
+}
+
+.cat-field.active {
+  background: #a06cd5;
+  border-color: #a06cd5;
+}
+
+/* Skill button colors by category */
+.skill-jumps {
+  border-color: #ffb347;
+}
+
+.skill-jumps:hover {
+  background: #fff8e7;
+  border-color: #ffb347;
+}
+
+.skill-spins {
+  border-color: #5dade2;
+}
+
+.skill-spins:hover {
+  background: #ebf5fb;
+  border-color: #5dade2;
+}
+
+.skill-footwork {
+  border-color: #2ecc71;
+}
+
+.skill-footwork:hover {
+  background: #e8f8f5;
+  border-color: #2ecc71;
+}
+
+.skill-field-moves {
+  border-color: #a06cd5;
+}
+
+.skill-field-moves:hover {
+  background: #f3e5ff;
+  border-color: #a06cd5;
+}
+
+/* Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.skill-button-wrapper {
+  width: 100%;
+}
+
+.skill-button {
+  padding: 15px;
+  border: 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: center;
+}
+
+.skill-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.skill-button.practiced {
+  border-width: 3px;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+/* Jumps - 橘黄色 */
+.skill-jumps {
+  background: #fff4e6;
+  border-color: #ffb347;
+  color: #cc6600;
+}
+
+.skill-jumps:hover {
+  background: #ffe0b3;
+  border-color: #ff9920;
+}
+
+.skill-jumps.practiced {
+  background: #ffd480;
+  border-color: #ff9920;
+}
+
+/* Spins - 蓝色 */
+.skill-spins {
+  background: #ebf5fb;
+  border-color: #5dade2;
+  color: #1a5490;
+}
+
+.skill-spins:hover {
+  background: #d6eaf8;
+  border-color: #3498db;
+}
+
+.skill-spins.practiced {
+  background: #aed6f1;
+  border-color: #3498db;
+}
+
+/* Footwork - 绿色 */
+.skill-footwork {
+  background: #e8f8f5;
+  border-color: #2ecc71;
+  color: #1e8449;
+}
+
+.skill-footwork:hover {
+  background: #d5f4e6;
+  border-color: #27ae60;
+}
+
+.skill-footwork.practiced {
+  background: #a9dfbf;
+  border-color: #27ae60;
+}
+
+/* Field Moves - 紫色 */
+.skill-field-moves {
+  background: #f3e5ff;
+  border-color: #a06cd5;
+  color: #6c3483;
+}
+
+.skill-field-moves:hover {
+  background: #e8daef;
+  border-color: #8e44ad;
+}
+
+.skill-field-moves.practiced {
+  background: #d7bde2;
+  border-color: #8e44ad;
+}
+
+.skill-button-wrapper select.skill-button {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 35px;
+}
+
+/* Today's Log */
+.today-log {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.today-log h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.log-item {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+  position: relative;
+}
+
+.log-item.log-jumps {
+  background: #fff8f0;
+  border-left-color: #ffb347;
+}
+
+.log-item.log-spins {
+  background: #f0f8fb;
+  border-left-color: #5dade2;
+}
+
+.log-item.log-footwork {
+  background: #f0faf5;
+  border-left-color: #2ecc71;
+}
+
+.log-item.log-field-moves {
+  background: #f8f0ff;
+  border-left-color: #a06cd5;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.log-skill {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.note-edit {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.note-edit input {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.note-edit button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.note-edit button:first-of-type {
+  background: #28a745;
+  color: white;
+}
+
+.note-edit button:last-of-type {
+  background: #6c757d;
+  color: white;
+}
+
+.note-display {
+  margin-top: 8px;
+}
+
+.note-text {
+  color: #555;
+  font-size: 13px;
+  font-style: italic;
+  margin: 0 0 6px 0;
+}
+
+.add-note-btn {
+  background: none;
+  border: 1px dashed #999;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  font-size: 12px;
+}
+
+.add-note-btn:hover {
+  background: #f0f0f0;
+  border-color: #666;
+}
+
+/* Progress Section */
+.progress-section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 30px;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.progress-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.progress-item.progress-jumps {
+  background: #fff8f0;
+  border-left-color: #ffb347;
+}
+
+.progress-item.progress-spins {
+  background: #f0f8fb;
+  border-left-color: #5dade2;
+}
+
+.progress-item.progress-footwork {
+  background: #f0faf5;
+  border-left-color: #2ecc71;
+}
+
+.progress-item.progress-field-moves {
+  background: #f8f0ff;
+  border-left-color: #a06cd5;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-skill {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.status-btn {
+  padding: 6px 12px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.status-btn:hover {
+  background: #f0f8ff;
+  border-color: #3498db;
+}
+
+.status-btn.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.progress-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.progress-stats span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Charts Section */
+.charts-section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 30px 0;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.chart {
+  min-height: 400px;
+}
+
+.chart-full {
+  width: 100%;
+}
+
+/* Section Header with Export Button */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.export-btn {
+  padding: 12px 24px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.export-btn:hover {
+  background: #229954;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+/* Status-based colors for skill buttons */
+
+/* NEW - 60% opacity, desaturated */
+.skill-status-new {
+  opacity: 0.5;
+  filter: grayscale(40%);
+}
+
+.skill-status-new:hover {
+  opacity: 0.7;
+  filter: grayscale(20%);
+}
+
+/* LEARNING - 85% opacity, normal */
+.skill-status-learning {
+  opacity: 0.85;
+}
+
+.skill-status-learning:hover {
+  opacity: 1;
+}
+
+/* MASTERED - 100% opacity, glow effect */
+.skill-status-mastered {
+  opacity: 1;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.skill-status-mastered:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* Category-specific glow for mastered */
+.skill-jumps.skill-status-mastered {
+  box-shadow: 0 0 15px rgba(255, 179, 71, 0.5);
+}
+
+.skill-jumps.skill-status-mastered:hover {
+  box-shadow: 0 0 25px rgba(255, 179, 71, 0.7);
+}
+
+.skill-spins.skill-status-mastered {
+  box-shadow: 0 0 15px rgba(93, 173, 226, 0.5);
+}
+
+.skill-spins.skill-status-mastered:hover {
+  box-shadow: 0 0 25px rgba(93, 173, 226, 0.7);
+}
+
+.skill-footwork.skill-status-mastered {
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+}
+
+.skill-footwork.skill-status-mastered:hover {
+  box-shadow: 0 0 25px rgba(46, 204, 113, 0.7);
+}
+
+.skill-field-moves.skill-status-mastered {
+  box-shadow: 0 0 15px rgba(160, 108, 213, 0.5);
+}
+
+.skill-field-moves.skill-status-mastered:hover {
+  box-shadow: 0 0 25px rgba(160, 108, 213, 0.7);
+}
+
+/* Skill Tree */
+.skill-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.category-group {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.category-header {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.category-header:hover {
+  background: #f8f9fa;
+}
+
+.category-jumps .category-header {
+  background: linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  color: #cc6600;
+}
+
+.category-spins .category-header {
+  background: linear-gradient(135deg, #ebf5fb 0%, #d6eaf8 100%);
+  color: #1a5490;
+}
+
+.category-footwork .category-header {
+  background: linear-gradient(135deg, #e8f8f5 0%, #d5f4e6 100%);
+  color: #1e8449;
+}
+
+.category-field-moves .category-header {
+  background: linear-gradient(135deg, #f3e5ff 0%, #e8daef 100%);
+  color: #6c3483;
+}
+
+.category-toggle {
+  font-size: 14px;
+}
+
+.category-title {
+  flex: 1;
+}
+
+.category-stats {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.skills-tree-list {
+  padding: 10px;
+  background: #f8f9fa;
+}
+
+.skill-tree-item {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-left: 4px solid;
+  transition: all 0.2s;
+}
+
+/* Compact style for new skills */
+.skill-compact {
+  padding: 6px 12px;
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.skill-compact .status-icon {
+  font-size: 12px;
+}
+
+.skill-compact .skill-tree-name {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.skill-compact:hover {
+  opacity: 0.7;
+}
+
+.show-new-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.show-new-btn:hover {
+  background: #e8e8e8;
+  border-color: #999;
+  color: #333;
+}
+
+.skill-tree-jumps {
+  border-left-color: #ffb347;
+}
+
+.skill-tree-spins {
+  border-left-color: #5dade2;
+}
+
+.skill-tree-footwork {
+  border-left-color: #2ecc71;
+}
+
+.skill-tree-field-moves {
+  border-left-color: #a06cd5;
+}
+
+/* Status-based styling */
+.skill-tree-status-new {
+  opacity: 0.6;
+}
+
+.skill-tree-status-learning {
+  opacity: 0.9;
+}
+
+.skill-tree-status-mastered {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.skill-tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-tree-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-icon {
+  font-size: 16px;
+}
+
+.skill-tree-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.skill-tree-days {
+  font-size: 13px;
+  color: #666;
+}
+
+.skill-tree-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notes-toggle {
+  background: #f0f0f0;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.notes-toggle:hover {
+  background: #e0e0e0;
+}
+
+.status-buttons-mini {
+  display: flex;
+  gap: 6px;
+}
+
+.status-btn-mini {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.status-btn-mini:hover {
+  transform: scale(1.1);
+}
+
+.status-btn-mini.active {
+  background: #f0f8ff;
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.skill-notes-list {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.note-item {
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.note-clickable {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.note-clickable:hover {
+  background: #e8f4f8;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.note-clickable:hover .note-date {
+  color: #3498db;
+  font-weight: 700;
+}
+
+.note-date {
+  color: #666;
+  font-weight: 600;
+  min-width: 80px;
+}
+
+.note-text {
+  color: #333;
+  font-style: italic;
+}
+
+.clear-data-btn {
+  padding: 6px 12px;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+  opacity: 0.7;
+}
+
+.clear-data-btn:hover {
+  background: #7f8c8d;
+  opacity: 1;
+}
