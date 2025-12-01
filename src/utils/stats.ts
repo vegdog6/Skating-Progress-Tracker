@@ -40,10 +40,3 @@ export function getTodayLogs(logs: PracticeLog[], date: string): PracticeLog[] {
   return logs.filter(log => log.date === date);
 }
 
-export function getSkillsByCategory(logs: PracticeLog[], category: string): PracticeLog[] {
-  return logs.filter(log => {
-    // 需要根据skillId找到对应的category
-    // 这个函数暂时简化，实际使用时需要传入PRESET_SKILLS
-    return true;
-  });
-}

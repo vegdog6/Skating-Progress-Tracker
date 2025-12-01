@@ -42,8 +42,8 @@ A cross-platform desktop application for tracking and visualizing figure skating
 ### Setup
 ```bash
 # Clone repository
-git clone <your-repo-url>
-cd skating_tracker
+git clone https://github.com/vegdog6/Skating-Progress-Tracker
+cd Skating-Progress-Tracker
 
 # Install dependencies
 npm install
