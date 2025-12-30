@@ -1,63 +1,147 @@
-/* Container */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  position: relative;
+  min-height: 100vh;
+  color: #1a1a1a;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url('./assets/ice-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.4;
+  z-index: -1;
+}
+
 .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 12px;
+  padding: 20px;
+  min-height: 100vh;
+  max-width: 100%;
 }
 
 h1 {
+  grid-column: 1 / -1;
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: #2c3e50;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 32px;
+  margin-bottom: 10px;
 }
 
 h2 {
+  font-size: 15px;
+  font-weight: 600;
   color: #34495e;
-  margin: 20px 0 15px 0;
-  font-size: 20px;
+  margin-bottom: 15px;
+  letter-spacing: 0.3px;
 }
 
-/* Top Section: Calendar + Today's Log */
+.progress-section {
+  grid-column: 1;
+  grid-row: 2 / 4;
+  background:linear-gradient(135deg, #fafbfc 0%, #f0f2f5 100%);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  height: 100%;
+  align-self: stretch;
+}
+
 .top-section {
+  grid-column: 2;
+  grid-row: 2;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
-  margin-bottom: 30px;
+  grid-template-columns: 280px 1fr;
+  gap: 12px;
+  align-items: start;
+  height: fit-content;
 }
 
-/* Compact Calendar */
+.middle-section {
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.charts-section {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 .calendar-section {
-  background: white;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(1px);
+  padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  width: 280px;
+  height: fit-content;
 }
 
 .calendar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .calendar-header h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .month-nav-btn {
-  background: #f0f0f0;
+  background: rgba(0, 0, 0, 0.05);
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.2s;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
+  transition: all 0.2s;
 }
 
 .month-nav-btn:hover {
-  background: #e0e0e0;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .calendar-weekdays {
@@ -65,8 +149,8 @@ h2 {
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
   margin-bottom: 6px;
-  font-weight: 600;
-  font-size: 11px;
+  font-weight: 300;
+  font-size: 9px;
   color: #666;
   text-align: center;
 }
@@ -74,8 +158,8 @@ h2 {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-  margin-bottom: 15px;
+  gap: 2px;
+  margin-bottom: 10px;
 }
 
 .calendar-day {
@@ -88,12 +172,13 @@ h2 {
   cursor: pointer;
   position: relative;
   transition: all 0.2s;
-  min-height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .calendar-day:not(.empty):hover {
   transform: scale(1.15);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 10;
 }
 
@@ -112,21 +197,23 @@ h2 {
 }
 
 .day-number {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 300;
   color: #2c3e50;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .day-count {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  background: rgba(0,0,0,0.7);
+  bottom: 1px;
+  right: 1px;
+  background: rgba(0, 0, 0, 0.7);
   color: white;
-  font-size: 9px;
-  padding: 1px 3px;
+  font-size: 7px;
+  padding: 1px 2px;
   border-radius: 2px;
-  font-weight: bold;
+  font-weight: 400;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .calendar-legend {
@@ -134,32 +221,18 @@ h2 {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  font-size: 11px;
+  font-size: 9px;
   color: #666;
+  font-weight: 200;
 }
 
 .legend-box {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Middle Section: Skill Selection + Progress Tree */
-.middle-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Category Filter */
 .category-filter {
   display: flex;
   gap: 10px;
@@ -167,29 +240,20 @@ h2 {
 }
 
 .category-filter button {
-  padding: 8px;
-  border: 2px solid;
+  padding: 8px 16px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 600;
-  transition: all 0.2s;
+  font-weight: 500;
+  background: white;
+  transition: all 0.2s ease;
 }
 
 .category-filter button:hover {
-  background: #f8f9fa;
+  background: rgba(0, 0, 0, 0.03);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.category-filter button:first-child.active {
-  background: #7f8c8d;
-  border-color: #7f8c8d;
-}
-
-.category-filter button.active {
-  color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .category-filter button:first-child {
@@ -198,7 +262,17 @@ h2 {
   color: #7f8c8d;
 }
 
-/* Category button colors */
+.category-filter button:first-child.active {
+  background: #7f8c8d;
+  border-color: #7f8c8d;
+  color: white;
+}
+
+.category-filter button.active {
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .cat-jumps {
   background: #fff4e6;
   border-color: #ffb347;
@@ -243,15 +317,15 @@ h2 {
   border-color: #a06cd5;
 }
 
-/* Skills Grid */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   padding: 20px;
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(1px);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .skill-button-wrapper {
@@ -259,37 +333,36 @@ h2 {
 }
 
 .skill-button {
-  padding: 8px;
-  border: 2px solid;
-  border-radius: 8px;
+  padding: 10px;
+  border: 1.5px solid;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   text-align: center;
+  background: white;
 }
 
 .skill-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .skill-button.practiced {
-  border-width: 3px;
-  font-weight: 700;
+  border-width: 2px;
+  font-weight: 600;
   box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
 }
 
-/* Jumps - 橘黄色 */
 .skill-jumps {
-  background: #fff4e6;
   border-color: #ffb347;
   color: #cc6600;
 }
 
 .skill-jumps:hover {
-  background: #ffe0b3;
+  background: #fff4e6;
   border-color: #ff9920;
 }
 
@@ -298,15 +371,13 @@ h2 {
   border-color: #ff9920;
 }
 
-/* Spins - 蓝色 */
 .skill-spins {
-  background: #ebf5fb;
   border-color: #5dade2;
   color: #1a5490;
 }
 
 .skill-spins:hover {
-  background: #d6eaf8;
+  background: #ebf5fb;
   border-color: #3498db;
 }
 
@@ -315,15 +386,13 @@ h2 {
   border-color: #3498db;
 }
 
-/* Footwork - 绿色 */
 .skill-footwork {
-  background: #e8f8f5;
   border-color: #2ecc71;
   color: #1e8449;
 }
 
 .skill-footwork:hover {
-  background: #d5f4e6;
+  background: #e8f8f5;
   border-color: #27ae60;
 }
 
@@ -332,15 +401,13 @@ h2 {
   border-color: #27ae60;
 }
 
-/* Field Moves - 紫色 */
 .skill-field-moves {
-  background: #f3e5ff;
   border-color: #a06cd5;
   color: #6c3483;
 }
 
 .skill-field-moves:hover {
-  background: #e8daef;
+  background: #f3e5ff;
   border-color: #8e44ad;
 }
 
@@ -349,60 +416,59 @@ h2 {
   border-color: #8e44ad;
 }
 
-.skill-button-wrapper select.skill-button {
-  appearance: none;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 35px;
-}
-
-/* Today's Log */
 .today-log {
-  background: white;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(1px);
+  padding: 16px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  height: fit-content;
 }
 
 .today-log h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
+  font-size: 15px;
+  margin-bottom: 12px;
 }
 
 .log-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-height: 400px;
+  gap: 8px;
+  max-height: 212px;
   overflow-y: auto;
 }
 
 .log-item {
-  padding: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid #28a745;
+  padding: 8px;
+  background: white;
+  border-radius: 10px;
+  border-left: 3px solid #28a745;
   position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.log-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateX(2px);
 }
 
 .log-item.log-jumps {
-  background: #fff8f0;
+  background: #fffbf7;
   border-left-color: #ffb347;
 }
 
 .log-item.log-spins {
-  background: #f0f8fb;
+  background: #f7fbfd;
   border-left-color: #5dade2;
 }
 
 .log-item.log-footwork {
-  background: #f0faf5;
+  background: #f7fcfa;
   border-left-color: #2ecc71;
 }
 
 .log-item.log-field-moves {
-  background: #f8f0ff;
+  background: #faf7fd;
   border-left-color: #a06cd5;
 }
 
@@ -414,17 +480,55 @@ h2 {
 }
 
 .log-skill {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
+}
+
+.status-buttons-mini {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.status-btn-mini {
+  padding: 3px 8px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.status-btn-mini:hover {
+  background: rgba(0, 0, 0, 0.03);
+  transform: scale(1.05);
+}
+
+.status-btn-mini.active.learning {
+  border-color: #b8860b;
+  color: #b8860b;
+  background: #faf8f3;
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.1);
+}
+
+.status-btn-mini.active.mastered {
+  border-color: #d4af37;
+  color: #d4af37;
+  background: #fffbf0;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
 }
 
 .delete-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
   padding: 4px 8px;
   transition: transform 0.2s;
+  margin-left: 8px;
 }
 
 .delete-btn:hover {
@@ -433,25 +537,34 @@ h2 {
 
 .note-edit {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 4px;
 }
 
 .note-edit input {
   flex: 1;
-  padding: 8px;
-  border: 2px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 2px 12px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
+}
+
+.note-edit input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
 }
 
 .note-edit button {
-  padding: 8px 16px;
+  padding: 6px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .note-edit button:first-of-type {
@@ -459,9 +572,18 @@ h2 {
   color: white;
 }
 
+.note-edit button:first-of-type:hover {
+  background: #229954;
+  transform: translateY(-1px);
+}
+
 .note-edit button:last-of-type {
   background: #6c757d;
   color: white;
+}
+
+.note-edit button:last-of-type:hover {
+  background: #5a6268;
 }
 
 .note-display {
@@ -470,34 +592,25 @@ h2 {
 
 .note-text {
   color: #555;
-  font-size: 13px;
+  font-size: 12px;
   font-style: italic;
   margin: 0 0 6px 0;
 }
 
 .add-note-btn {
   background: none;
-  border: 1px dashed #999;
+  border: 1px dashed #ccc;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   color: #666;
-  font-size: 12px;
+  font-size: 11px;
+  transition: all 0.2s ease;
 }
 
 .add-note-btn:hover {
-  background: #f0f0f0;
-  border-color: #666;
-}
-
-
-/* Charts Section */
-.charts-section {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin: 30px 0;
+  background: rgba(0, 0, 0, 0.02);
+  border-color: #999;
 }
 
 .charts-grid {
@@ -515,7 +628,6 @@ h2 {
   width: 100%;
 }
 
-/* Section Header with Export Button */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -524,50 +636,49 @@ h2 {
 }
 
 .export-btn {
-  padding: 12px 20px;
-  background: #27ae60;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
 }
 
 .export-btn:hover {
-  background: #229954;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
 }
 
-/* Status-based colors for skill buttons */
-
-/* NEW - 60% opacity, desaturated */
-.skill-status-new {
+.skill-status-new,
+.skill-tree-status-new {
   opacity: 0.4;
   filter: grayscale(40%);
 }
 
-.skill-status-new:hover {
+.skill-status-new:hover,
+.skill-tree-status-new:hover {
   opacity: 0.6;
   filter: grayscale(20%);
 }
 
-/* LEARNING - 85% opacity, normal */
-.skill-status-learning {
+.skill-status-learning,
+.skill-tree-status-learning {
   opacity: 0.6;
 }
 
-.skill-status-learning:hover {
+.skill-status-learning:hover,
+.skill-tree-status-learning:hover {
   opacity: 0.85;
 }
 
-/* MASTERED - 100% opacity, glow effect */
-.skill-status-mastered {
+.skill-status-mastered,
+.skill-tree-status-mastered {
   opacity: 1;
-  font-weight: 700;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  font-weight: 600;
 }
 
 .skill-status-mastered:hover {
@@ -575,7 +686,6 @@ h2 {
   transform: translateY(-3px) scale(1.02);
 }
 
-/* Category-specific glow for mastered */
 .skill-jumps.skill-status-mastered {
   box-shadow: 0 0 15px rgba(255, 179, 71, 0.5);
 }
@@ -608,18 +718,23 @@ h2 {
   box-shadow: 0 0 25px rgba(160, 108, 213, 0.7);
 }
 
-/* Skill Tree */
 .skill-tree {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .category-group {
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.category-group:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .category-header {
@@ -629,12 +744,12 @@ h2 {
   align-items: center;
   gap: 12px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
   transition: background 0.2s;
 }
 
 .category-header:hover {
-  background: #f8f9fa;
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .category-jumps .category-header {
@@ -658,7 +773,7 @@ h2 {
 }
 
 .category-toggle {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .category-title {
@@ -666,37 +781,42 @@ h2 {
 }
 
 .category-stats {
-  font-size: 12px;
+  font-size: 11px;
   opacity: 0.8;
 }
 
 .skills-tree-list {
-  padding: 7px;
-  background: #f8f9fa;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .skill-tree-item {
-  background: white;
-  border-radius: 8px;
-  padding: 6px;
-  margin-bottom: 7px;
-  border-left: 4px solid;
-  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-left: 3px solid;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Compact style for new skills */
+.skill-tree-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateX(4px);
+  border-left-width: 4px;
+}
+
 .skill-compact {
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 8px 12px;
+  font-size: 12px;
   opacity: 0.5;
 }
 
 .skill-compact .status-icon {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .skill-compact .skill-tree-name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
 }
 
@@ -708,17 +828,17 @@ h2 {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
-  background: #f0f0f0;
-  border: 1px dashed #ccc;
-  border-radius: 6px;
+  background: white;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .show-new-btn:hover {
-  background: #e8e8e8;
+  background: #f9f9f9;
   border-color: #999;
   color: #333;
 }
@@ -739,20 +859,6 @@ h2 {
   border-left-color: #a06cd5;
 }
 
-/* Status-based styling */
-.skill-tree-status-new {
-  opacity: 0.6;
-}
-
-.skill-tree-status-learning {
-  opacity: 0.9;
-}
-
-.skill-tree-status-mastered {
-  opacity: 1;
-  font-weight: 600;
-}
-
 .skill-tree-header {
   display: flex;
   justify-content: space-between;
@@ -762,21 +868,38 @@ h2 {
 .skill-tree-info {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .status-icon {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .skill-tree-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 }
 
+.skill-tree-status-new .skill-tree-name {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.skill-tree-status-learning .skill-tree-name {
+  color: #b8860b;
+  font-weight: 500;
+}
+
+.skill-tree-status-mastered .skill-tree-name {
+  color: #d4af37;
+  font-weight: 600;
+}
+
 .skill-tree-days {
-  font-size: 13px;
-  color: #666;
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 300;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .skill-tree-actions {
@@ -786,42 +909,17 @@ h2 {
 }
 
 .notes-toggle {
-  background: #f0f0f0;
+  background: rgba(0, 0, 0, 0.05);
   border: none;
-  padding: 4px;
+  padding: 4px 8px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 11px;
   transition: background 0.2s;
 }
 
 .notes-toggle:hover {
-  background: #e0e0e0;
-}
-
-.status-buttons-mini {
-  display: flex;
-  gap: 6px;
-}
-
-.status-btn-mini {
-  background: white;
-  border: 2px solid #e0e0e0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s;
-}
-
-.status-btn-mini:hover {
-  transform: scale(1.1);
-}
-
-.status-btn-mini.active {
-  background: #f0f8ff;
-  border-color: #3498db;
-  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .skill-notes-list {
@@ -831,13 +929,13 @@ h2 {
 }
 
 .note-item {
-  padding: 6px;
+  padding: 8px;
   background: #f8f9fa;
   border-radius: 6px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   display: flex;
   gap: 10px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .note-clickable {
@@ -848,29 +946,26 @@ h2 {
 .note-clickable:hover {
   background: #e8f4f8;
   transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .note-clickable:hover .note-date {
   color: #3498db;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .note-date {
   color: #666;
-  font-weight: 600;
+  font-weight: 500;
   min-width: 80px;
-}
-
-.note-text {
-  color: #333;
-  font-style: italic;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
 }
 
 .export-success {
   color: #27ae60;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 15px;
   animation: fadeIn 0.3s;
 }
@@ -878,4 +973,15 @@ h2 {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

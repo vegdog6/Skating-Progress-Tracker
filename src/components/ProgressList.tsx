@@ -5,11 +5,10 @@ import { PRESET_SKILLS } from '../utils/skills';
 interface ProgressListProps {
   progress: SkillProgress[];
   logs: PracticeLog[];
-  onChangeStatus: (skillId: string, status: 'new' | 'learning' | 'mastered') => void;
   onSelectDate: (date: string) => void;
 }
 
-export default function ProgressList({ progress, logs, onChangeStatus, onSelectDate }: ProgressListProps) {
+export default function ProgressList({ progress, logs, onSelectDate }: ProgressListProps) {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['jumps', 'spins', 'footwork', 'field-moves']));
   const [expandedSkills, setExpandedSkills] = useState<Set<string>>(new Set());
   const [showNewSkills, setShowNewSkills] = useState<Set<string>>(new Set());
@@ -51,10 +50,10 @@ export default function ProgressList({ progress, logs, onChangeStatus, onSelectD
   };
 
   const categories = [
-    { id: 'jumps', name: 'Jumps', emoji: '🦘' },
-    { id: 'spins', name: 'Spins', emoji: '🌀' },
-    { id: 'footwork', name: 'Footwork', emoji: '👣' },
-    { id: 'field-moves', name: 'Field Moves', emoji: '⛸️' }
+    { id: 'jumps', name: 'Jumps' },
+    { id: 'spins', name: 'Spins' },
+    { id: 'footwork', name: 'Footwork',},
+    { id: 'field-moves', name: 'Field Moves'}
   ];
 
   const getSkillsByCategory = (categoryId: string) => {
@@ -92,7 +91,7 @@ export default function ProgressList({ progress, logs, onChangeStatus, onSelectD
 
   return (
     <div className="progress-section">
-      <h2>📊 Skill Progress Tree</h2>
+      <h2>Skill Progress Tree</h2>
       
       <div className="skill-tree">
         {categories.map(category => {
@@ -109,7 +108,7 @@ export default function ProgressList({ progress, logs, onChangeStatus, onSelectD
               >
                 <span className="category-toggle">{isExpanded ? '▼' : '▶'}</span>
                 <span className="category-title">
-                  {category.emoji} {category.name} ({skills.length} skills)
+                  {category.name} ({skills.length} skills)
                 </span>
                 <span className="category-stats">
                   ✨ {masteredCount} | 🟡 {learningCount}
@@ -133,37 +132,24 @@ export default function ProgressList({ progress, logs, onChangeStatus, onSelectD
                             <span className="status-icon">{getStatusIcon(skill.progress.status)}</span>
                             <span className="skill-tree-name">{skill.name}</span>
                             {!isNew && skill.progress.totalDays > 0 && (
-                              <span className="skill-tree-days">📊 {skill.progress.totalDays} days</span>
+                              <span className="skill-tree-days">
+                                Started: {skill.progress.firstPracticeDate}
+                                {skill.progress.status === 'mastered' && skill.progress.masteredDate && (
+                                  <> | Mastered: {skill.progress.masteredDate}</>
+                                )}
+                                {' '}({skill.progress.totalDays} days)
+                              </span>
                             )}
                           </div>
                           
-                          {!isNew && (
+                          {!isNew && notes.length > 0 && (
                             <div className="skill-tree-actions">
-                              {notes.length > 0 && (
-                                <button 
-                                  className="notes-toggle"
-                                  onClick={() => toggleSkill(skill.id)}
-                                >
-                                  📝 {notes.length} {isSkillExpanded ? '▼' : '▶'}
-                                </button>
-                              )}
-                              
-                              <div className="status-buttons-mini">
-                                <button
-                                  className={`status-btn-mini ${skill.progress.status === 'learning' ? 'active' : ''}`}
-                                  onClick={() => onChangeStatus(skill.id, 'learning')}
-                                  title="Learning"
-                                >
-                                  🟡
-                                </button>
-                                <button
-                                  className={`status-btn-mini ${skill.progress.status === 'mastered' ? 'active' : ''}`}
-                                  onClick={() => onChangeStatus(skill.id, 'mastered')}
-                                  title="Mastered"
-                                >
-                                  ✨
-                                </button>
-                              </div>
+                              <button 
+                                className="notes-toggle"
+                                onClick={() => toggleSkill(skill.id)}
+                              >
+                                📝 {notes.length} {isSkillExpanded ? '▼' : '▶'}
+                              </button>
                             </div>
                           )}
                         </div>
@@ -202,7 +188,7 @@ export default function ProgressList({ progress, logs, onChangeStatus, onSelectD
                     </button>
                   )}
                 </div>
-            )}
+              )}
             </div>
           );
         })}

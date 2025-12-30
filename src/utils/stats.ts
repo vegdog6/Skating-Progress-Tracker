@@ -1,6 +1,9 @@
 import { PracticeLog, SkillProgress } from '../types';
 
-export function calculateSkillProgress(logs: PracticeLog[], savedStatuses: Map<string, 'new' | 'learning' | 'mastered'>): SkillProgress[] {
+export function calculateSkillProgress(
+  logs: PracticeLog[], 
+  savedStatuses: Map<string, 'new' | 'learning' | 'mastered'>
+): SkillProgress[] {
   const progressMap = new Map<string, SkillProgress>();
   
   logs.forEach(log => {
@@ -8,35 +11,39 @@ export function calculateSkillProgress(logs: PracticeLog[], savedStatuses: Map<s
     
     if (!existing) {
       // First time practicing this skill
-
       progressMap.set(log.skillId, {
         skillId: log.skillId,
         skillName: log.skillName,
         status: savedStatuses.get(log.skillId) || 'learning',
         totalDays: 1,
         firstPracticeDate: log.date,
-        lastPracticeDate: log.date
+        masteredDate: log.wasMastered ? log.date : undefined
       });
     } else {
       // Update existing progress
+      const skillLogs = logs.filter(l => l.skillId === log.skillId);
       const dates = new Set<string>();
-      logs
-        .filter(l => l.skillId === log.skillId)
-        .forEach(l => dates.add(l.date));
+      skillLogs.forEach(l => dates.add(l.date));
       
       existing.totalDays = dates.size;
-      existing.lastPracticeDate = log.date;
-
+      
+      // Update status from saved statuses
       const savedStatus = savedStatuses.get(log.skillId);
       if (savedStatus) {
         existing.status = savedStatus;
       }
+      
+      // Find mastered date from logs
+      const masteredLog = skillLogs.find(l => l.wasMastered);
+      if (masteredLog) {
+        existing.masteredDate = masteredLog.date;
+      }
     }
   });
+  
   return Array.from(progressMap.values());
 }
 
 export function getTodayLogs(logs: PracticeLog[], date: string): PracticeLog[] {
   return logs.filter(log => log.date === date);
 }
-

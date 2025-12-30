@@ -12,6 +12,7 @@ export interface SkillDefinition {
     date: string;
     variant?: string;
     note?: string;
+    wasMastered?: boolean;
   }
   
   export interface SkillProgress {
@@ -20,5 +21,5 @@ export interface SkillDefinition {
     status: 'new' | 'learning' | 'mastered';
     totalDays: number;
     firstPracticeDate?: string;
-    lastPracticeDate?: string;
+    masteredDate?: string;
   }

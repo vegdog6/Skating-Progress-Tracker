@@ -18,6 +18,7 @@ import PracticeLogList from "./components/PracticeLog";
 import ProgressList from "./components/ProgressList";
 import Calendar from "./components/Calendar";
 import Charts from "./components/Charts";
+import iceBackground from "./assets/ice-background.jpg";
 
 
 function App() {
@@ -64,6 +65,14 @@ function App() {
     const newMap = new Map(skillStatuses);
     newMap.set(skillId, newStatus);
     setSkillStatuses(newMap);
+
+    if (newStatus === 'mastered') {
+      setPracticeLogs(practiceLogs.map(log => 
+        log.skillId === skillId && log.date === selectedDate
+          ? { ...log, wasMastered: true }
+          : log
+      ));
+    }
   };
 
   // Derived data
@@ -95,10 +104,19 @@ function App() {
   }, [practiceLogs]);
 
   return (
-    <div className="container">
-      <h1>⛸️ Figure Skating Progress Tracker</h1>
+    <div className="container" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6)), url(${iceBackground})`, 
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundAttachment: 'fixed'}}>
+      <h1>Figure Skating Progress Tracker</h1>
   
-      {/* Top Section: Calendar + Today's Log */}
+      <ProgressList 
+        progress={skillProgress}
+        logs={practiceLogs}
+        onSelectDate={setSelectedDate}
+      />
+  
       <div className="top-section">
         <Calendar 
           logs={practiceLogs}
@@ -108,15 +126,15 @@ function App() {
         
         <PracticeLogList 
           logs={todayLogs}
+          progress={skillProgress}
           onDelete={deleteLog}
           onUpdateNote={updateNote}
+          onChangeStatus={changeSkillStatus}
         />
       </div>
   
-      {/* Middle Section */}
       <div className="middle-section">
         <div className="left-panel">    
-          {/* Category Filter */}
           <div className="category-filter">
             <button 
               className={selectedCategory === 'all' ? 'active' : ''}
@@ -150,7 +168,6 @@ function App() {
             </button>
           </div>
   
-          {/* Skills Grid */}
           <SkillGrid 
             skills={filteredSkills}
             todayLogs={todayLogs}
@@ -158,17 +175,8 @@ function App() {
             onLogPractice={logPractice}
           />
         </div>
-  
-        {/* Progress Tree (right side) */}
-        <ProgressList 
-          progress={skillProgress}
-          logs={practiceLogs}
-          onChangeStatus={changeSkillStatus}
-          onSelectDate={setSelectedDate}
-        />
       </div>
   
-      {/* Charts */}
       <Charts 
         logs={practiceLogs}
         onExport={() => exportToCSV(practiceLogs)} 
