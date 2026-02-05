@@ -12,7 +12,7 @@ import { PRESET_SKILLS } from "./utils/skills";
 import { calculateSkillProgress, getTodayLogs } from "./utils/stats";
 import { loadData, saveData } from "./utils/storage";
 import { exportToCSV } from "./utils/export";
-import { ask } from '@tauri-apps/plugin-dialog';
+//import { ask } from '@tauri-apps/plugin-dialog';
 import SkillGrid from "./components/SkillGrid";
 import PracticeLogList from "./components/PracticeLog";
 import ProgressList from "./components/ProgressList";
